@@ -20,7 +20,7 @@ deploy:
   api_key:
     secure: DHImT2dYa9c6Ouzu56aw2T2wg+1/ol84uCtZ2UN6QdO4Ol/4sinyYzs9w2oh2q1AANT+n1R/l8O+oItP5KWNOyaJ9ARy5TNO8cKGfPQpaLYSJYJHH7UD5Bwb79tFXD6knUYGjtLu9EAAeatPCSr7mfgOz8pwRW44otEkxUINt4Dl73dFdPbt/VTUW7diBtWo7obSaZ2QDyNJytL3ItrGGwTLGegeVeybe5REwoJhQEefs/MsMHG2heaZXflhp3aDNRyYApGr4RrqaegT4MqYAbj2n3pxNjy1HuSP4S7cZ4pP5cYufqKXVWLBPbu5lwcVnQeFclmlEGYxtnSZrdE4G3iPAxDsFspcC3r1boPstCWXtJPhrk4O3ljNXKy4h0mWKKc5FLl1VHl+s1li25RxIGqPNSe7idD2FNMXHw/sUhHobgCfWVMcJ/L8BtN8qq1pbjvPzSo/I4qU6wd0GbgBUphLWq8+enavgudZ9yM5HZe13MgDY0/HCY7yN08okry6bfuD9wXbKXH1qyKx0m1Gs+bpEfkECu1Bm7hObMIXCG7uLZlkynNlM2VDqHeamaMtZuGXRPbfS4hCOMsSv5L4I4f4DETe/NGFYOx1Pxr+oaHs6VSLG4o4Iv8qVz67CwxWzaXVncfLrWdXP6TeeO+LWnvN/VvM8iIATOaHYlBVj2g=
   app:
-    master: food_vendor_app
-    staging: food_vendor_app-staging
+    master: food-vend-app
+    staging: food-vend-app-staging
   run:
     - python manage.py migrate --noinput
