@@ -1,16 +1,16 @@
 language: python
 python:
-- '3.6'
+  - "3.6"
 install:
-- pip install -r requirements.txt
+  - pip install -r requirements.txt
 services:
-- postgresql
+  - postgresql
 before_script:
-- psql -c 'create database travis_ci_test;' -U postgres
-- python manage.py migrate --settings=food_vendor_project.settings.test
+  - psql -c 'create database travis_ci_test;' -U postgres
+  - python manage.py migrate --settings=food_vendor_project.settings.test
 script:
-- coverage run --source=app manage.py test --settings=food_vendor_project.settings.test
-- flake8 .
+  - coverage run --source=food_vendor_app manage.py test --settings=food_vendor_project.settings.test
+  - flake8 .
 after_success: coveralls
 notifications:
   slack:
@@ -23,4 +23,4 @@ deploy:
     master: food_vendor_app
     staging: food_vendor_app-staging
   run:
-  - python manage.py migrate --noinput
+    - python manage.py migrate --noinput
