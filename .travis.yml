@@ -1,0 +1,26 @@
+language: python
+python:
+  - "3.6"
+install:
+  - pip install -r requirements.txt
+services:
+  - postgresql
+before_script:
+  - psql -c 'create database travis_ci_test;' -U postgres
+  - python manage.py migrate --settings=food_vendor_project.settings.test
+script:
+  - coverage run --source=food_vendor_app manage.py test --settings=food_vendor_project.settings.test
+  - flake8 .
+after_success: coveralls
+notifications:
+  slack:
+    secure: yT1V0G1fGCo6SSYaSUTCT+RMr/SGX2KNmuhopEF5hTm4gG8lC7o6HdxbLOjkWToB3sgkXN03YZbYyQPkGWCBUf2fpHA2sHSqA1rDFdEG4kyCyea9/8raWobF5SXBhK6SfDPP/J2IusBAriZOV85JrMne2gi/jctnqHEq3vY4c1AxhEkQBWenxXZjwvecRXuq1Yd7tDOBOxzZ34rwDoyvyqnTIghzmmPXk+GsK8PIgqNiIfuVyXQAuAUNJSj1O7SEmckGQm4Jwg/dn2rJXcFW/02KsibCAmCZNslniMvnmg5hY451KrqCGFqorY41oAwASOYulfyjnEsYoiItq2V1Jd9KXu2zU71wltMWUwO/hgm3OwtHf/os2FSE4giBTjVZ0r9S0uKOE+/aiUgp61gnv4MZ+owUip+TiMgpMDUZ+6h8YxT1T2tDtrRmG4X6D/H6hamPCVSJ0POunGRv0DfbR7qhbeOHP0zweQIC1w2mgaYT5WiW+0dPgczuZy3bRUX7TOYy4/azix8TaUedaCftZPXxi9Yjw3TpISq71+f4Aj7Hrw4gemvAWntBAKTbAimirxPj7mTb681axsmspyxbY5bUrmcOHAySmIXwrLP4sYDihUMhfW+Ijjv2ee01CD1Z6xbZ2E2HLC2XxsZW76zuO/04ftY+EVW0avtqYTIaFjQ=
+deploy:
+  provider: heroku
+  api_key:
+    secure: DHImT2dYa9c6Ouzu56aw2T2wg+1/ol84uCtZ2UN6QdO4Ol/4sinyYzs9w2oh2q1AANT+n1R/l8O+oItP5KWNOyaJ9ARy5TNO8cKGfPQpaLYSJYJHH7UD5Bwb79tFXD6knUYGjtLu9EAAeatPCSr7mfgOz8pwRW44otEkxUINt4Dl73dFdPbt/VTUW7diBtWo7obSaZ2QDyNJytL3ItrGGwTLGegeVeybe5REwoJhQEefs/MsMHG2heaZXflhp3aDNRyYApGr4RrqaegT4MqYAbj2n3pxNjy1HuSP4S7cZ4pP5cYufqKXVWLBPbu5lwcVnQeFclmlEGYxtnSZrdE4G3iPAxDsFspcC3r1boPstCWXtJPhrk4O3ljNXKy4h0mWKKc5FLl1VHl+s1li25RxIGqPNSe7idD2FNMXHw/sUhHobgCfWVMcJ/L8BtN8qq1pbjvPzSo/I4qU6wd0GbgBUphLWq8+enavgudZ9yM5HZe13MgDY0/HCY7yN08okry6bfuD9wXbKXH1qyKx0m1Gs+bpEfkECu1Bm7hObMIXCG7uLZlkynNlM2VDqHeamaMtZuGXRPbfS4hCOMsSv5L4I4f4DETe/NGFYOx1Pxr+oaHs6VSLG4o4Iv8qVz67CwxWzaXVncfLrWdXP6TeeO+LWnvN/VvM8iIATOaHYlBVj2g=
+  app:
+    master: food_vendor_app
+    staging: food_vendor_app-staging
+  run:
+    - python manage.py migrate --noinput
