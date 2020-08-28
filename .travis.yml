@@ -1,16 +1,16 @@
 language: python
 python:
-  - "3.6"
+- '3.6'
 install:
-  - pip install -r requirements.txt
+- pip install -r requirements.txt
 services:
-  - postgresql
+- postgresql
 before_script:
-  - psql -c 'create database travis_ci_test;' -U postgres
-  - python manage.py migrate --settings=food_vendor_project.settings.test
+- psql -c 'create database travis_ci_test;' -U postgres
+- python manage.py migrate --settings=food_vendor_project.settings.test
 script:
-  - coverage run --source=food_vendor_app manage.py test --settings=food_vendor_project.settings.test
-  - flake8 .
+- coverage run --source=food_vendor_app manage.py test --settings=food_vendor_project.settings.test
+- flake8 .
 after_success: coveralls
 notifications:
   slack:
@@ -18,9 +18,9 @@ notifications:
 deploy:
   provider: heroku
   api_key:
-    secure: DHImT2dYa9c6Ouzu56aw2T2wg+1/ol84uCtZ2UN6QdO4Ol/4sinyYzs9w2oh2q1AANT+n1R/l8O+oItP5KWNOyaJ9ARy5TNO8cKGfPQpaLYSJYJHH7UD5Bwb79tFXD6knUYGjtLu9EAAeatPCSr7mfgOz8pwRW44otEkxUINt4Dl73dFdPbt/VTUW7diBtWo7obSaZ2QDyNJytL3ItrGGwTLGegeVeybe5REwoJhQEefs/MsMHG2heaZXflhp3aDNRyYApGr4RrqaegT4MqYAbj2n3pxNjy1HuSP4S7cZ4pP5cYufqKXVWLBPbu5lwcVnQeFclmlEGYxtnSZrdE4G3iPAxDsFspcC3r1boPstCWXtJPhrk4O3ljNXKy4h0mWKKc5FLl1VHl+s1li25RxIGqPNSe7idD2FNMXHw/sUhHobgCfWVMcJ/L8BtN8qq1pbjvPzSo/I4qU6wd0GbgBUphLWq8+enavgudZ9yM5HZe13MgDY0/HCY7yN08okry6bfuD9wXbKXH1qyKx0m1Gs+bpEfkECu1Bm7hObMIXCG7uLZlkynNlM2VDqHeamaMtZuGXRPbfS4hCOMsSv5L4I4f4DETe/NGFYOx1Pxr+oaHs6VSLG4o4Iv8qVz67CwxWzaXVncfLrWdXP6TeeO+LWnvN/VvM8iIATOaHYlBVj2g=
+    secure: XX9djgk6tevIQyHmcp6Xtv9afmIKiDuXJI8iITGlS/jtgk0vnO6F6gQkjKXgDH+avdyaffCekPJB8f6XNR1yoDZ6U4sbrtXPG0tP+1N12ESiULwOBsXAJNTmCEWDkSIvZMKKnzhm3R6OgY7l6PvLBJZ4RrSY/R8N3nylx5Jaoruip1/jOuEa9X7EQuxvIeFuLKN7VTUhsmiiMj9eYAgnRjkCyASIJ0qidY3uppjCetm1AGhOgq5IfYAuD7AtSBHlxwidX4jIAzeo+S2yrmzWLgw2X+waNLYa6Vek+cho75EUUHhhz1X9shQjsgzb26MJ5tL0vgbYMK0DUKknj8FgUoG6N2f9z3Z0/mB4lz+CNcr51XV6RxF2ISxf1eiIxjsP31Wl4JLVnZvmcL6ftwhbk6JshE32lmd3SCux39koR2yaqNodT6H4pXJb6iY1nEvC+PhhtvG3HM1dOxswkLIY0IBmlIgvC1IMoFGEveBryBLZAiOyZlVLnOOimViEj/q/oTUcu1sx5pBdkzvjAUD0DCPiC4d2Ofdwxf9rmMAvTmeYDY+/ovdyh8FdO8qDgZx06SHt+UYl1Ay9MPHLyYS321bITrf4tHrJ/8KZpvBc9i3kKV2u+LhbNI6OEUjtq47k3+f7FiHLxH1IDLK3kKASwTgpua4Xm1/0TcVEfF4GSm8=
   app:
     master: food-vend-app
     staging: food-vend-app-staging
   run:
-    - python manage.py migrate --noinput
+  - python manage.py migrate --noinput
