@@ -1,24 +1,40 @@
-from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.db import models
+from django.utils.translation import ugettext_lazy as _
+
+from .managers import CustomUserProfileManager
 
 
 class UserProfile(AbstractUser):
+    username = None
+    email = models.EmailField(_('email address'), unique=True)
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
+
+    objects = CustomUserProfileManager()
+
     is_vendor = models.BooleanField(default=False)
-    business_name = models.CharField(max_length=200, null=True, blank=True)
     phone_number = models.CharField(max_length=20)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'{self.first_name} {self.last_name}'
+        return f'{self.first_name}'
+
+
+class VendorProfile(models.Model):
+    user = models.OneToOneField(UserProfile, on_delete=models.CASCADE,
+                                related_name='vendor_profile')
+    business_name = models.CharField(max_length=100)
 
 
 class Meal(models.Model):
     name = models.CharField(max_length=300)
-    vendor = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    vendor = models.ForeignKey(VendorProfile, on_delete=models.CASCADE, default='')
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'{self.name}\'s made by {self.vendor_id.first_name}'
+        return f'{self.name} made by {self.vendor_id.first_name}'
 
 
 class DaysOfOccurence(models.Model):
@@ -46,7 +62,7 @@ class Menu(models.Model):
         ('DAIRY-FREE', 'Dairy-Free')
     ]
 
-    vendor_id = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    vendor = models.ForeignKey(VendorProfile, on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
     meals = models.ManyToManyField(Meal)
     menu_type = models.CharField(max_length=20, choices=MENU_TYPE)
@@ -59,8 +75,9 @@ class Menu(models.Model):
 
 
 class Order(models.Model):
-    buyer = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='customer_user')
-    vendor = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    customer = models.ForeignKey(UserProfile, on_delete=models.CASCADE,
+                                 related_name='customer_user')
+    vendor = models.ForeignKey(VendorProfile, on_delete=models.CASCADE)
     menu = models.ForeignKey(Menu, on_delete=models.CASCADE, null=True, blank=True)
     meals = models.ForeignKey(Meal, on_delete=models.CASCADE, null=True, blank=True)
 
