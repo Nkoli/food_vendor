@@ -121,4 +121,4 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # https://devcenter.heroku.com/articles/django-app-configuration
 django_heroku.settings(locals())
 
-AUTH_USER_MODEL = "food_vendor_app.UserProfile"
+AUTH_USER_MODEL = "food_vendor_app.User"
