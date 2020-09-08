@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'food_vendor_app',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
