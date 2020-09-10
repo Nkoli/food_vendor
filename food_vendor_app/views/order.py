@@ -2,12 +2,15 @@ from django.http import Http404
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 
 from ..models import Order, OrderPayment
 from ..serializers import OrderPaymentSerializer, OrderSerializer
 
 
 class OrderList(APIView):
+    permission_classes = [IsAuthenticated]
+
     def get(self, request):
         orders = Order.objects.all()
         serializer = OrderSerializer(orders, many=True)
@@ -21,6 +24,8 @@ class OrderList(APIView):
 
 
 class OrderDetail(APIView):
+    permission_classes = [IsAuthenticated]
+
     def get_object(self, pk):
         try:
             return Order.objects.get(pk=pk)

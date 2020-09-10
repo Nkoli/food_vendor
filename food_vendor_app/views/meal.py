@@ -2,12 +2,15 @@ from django.http import Http404
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from ..models import Meal
 from ..serializers import MealSerializer
 
 
 class MealList(APIView):
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
     def get(self, request):
         meals = Meal.objects.all()
         serializer = MealSerializer(meals, many=True)
@@ -22,6 +25,8 @@ class MealList(APIView):
 
 
 class MealDetail(APIView):
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
     def get_object(self, pk):
         try:
             return Meal.objects.get(pk=pk)
