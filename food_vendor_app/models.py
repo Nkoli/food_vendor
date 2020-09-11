@@ -5,14 +5,14 @@ from django.db import models
 
 class User(AbstractUser):
 
-    email = models.EmailField(max_length=255, verbose_name='email address', unique=True)
+    email = models.EmailField(verbose_name='email address', unique=True)
     is_vendor = models.BooleanField(default=False)
     business_name = models.CharField(max_length=100, null=True, blank=True)
     phone_number = models.CharField(max_length=20)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'{self.username}'
+        return f'{self.email} - {self.username}'
 
 
 class Meal(models.Model):
