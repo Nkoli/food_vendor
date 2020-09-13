@@ -4,7 +4,8 @@ from django.utils.translation import ugettext_lazy as _
 
 class CustomUserManager(BaseUserManager):
     """
-    custom user model manager which uses email as the unique identifier for authentication instead of username.
+    custom user model manager which uses email as the unique identifier for authentication
+    instead of username.
     """
 
     def create_user(self, email, password, **extra_fields):
