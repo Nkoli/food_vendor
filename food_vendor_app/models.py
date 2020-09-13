@@ -1,18 +1,29 @@
 from django.contrib.auth.models import AbstractUser
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
+from django.utils.translation import ugettext_lazy as _
+
+from .managers import CustomUserManager
 
 
 class User(AbstractUser):
 
-    email = models.EmailField(verbose_name='email address', unique=True)
-    is_vendor = models.BooleanField(default=False)
-    business_name = models.CharField(max_length=100, null=True, blank=True)
+    username = None
+    email = models.EmailField(_('email address'), unique=True)
     phone_number = models.CharField(max_length=20)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
+
+    objects = CustomUserManager()
+
+    name = models.CharField(max_length=200, blank=False, null=False)
+    is_vendor = models.BooleanField(default=False)
+    business_name = models.CharField(max_length=100, null=True, blank=True)
+
     def __str__(self):
-        return f'{self.email} - {self.username}'
+        return f'{self.email} - {self.name}'
 
 
 class Meal(models.Model):
