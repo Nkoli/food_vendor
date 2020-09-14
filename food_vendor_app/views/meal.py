@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
-from ..models import Meal, User
+from ..models import Meal
 from ..serializers import MealSerializer
 
 
