@@ -32,10 +32,18 @@ class UserLoginSerializer(serializers.Serializer):
 
 
 class MealSerializer(serializers.ModelSerializer):
+    vendor = serializers.ReadOnlyField(source='vendor.name')
 
     class Meta:
         model = Meal
-        fields = '__all__'
+        fields = ['id', 'name', 'vendor', 'description', 'metadata']
+
+    def update(self, instance, validated_data):
+        instance.name = validated_data.get('name', instance.name)
+        instance.description = validated_data.get('description', instance.description)
+        instance.metadata = validated_data.get('metadata', instance.metadata)
+        instance.save()
+        return instance
 
 
 class MenuSerializer(serializers.ModelSerializer):
