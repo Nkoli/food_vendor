@@ -28,13 +28,13 @@ class User(AbstractUser):
 
 class Meal(models.Model):
     name = models.CharField(max_length=300)
-    vendor_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    vendor = models.ForeignKey(User, on_delete=models.CASCADE)
     description = models.TextField()
     metadata = models.CharField(max_length=250)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'{self.name} made by {self.vendor_id.username}'
+        return f'{self.name} made by {self.vendor.name}'
 
 
 class Menu(models.Model):
@@ -56,7 +56,7 @@ class Menu(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'{self.name}, {self.dietary_type} menu.'
+        return f'{self.name}, a {self.dietary_type} menu.'
 
 
 class Order(models.Model):
