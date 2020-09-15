@@ -1,52 +1,16 @@
-from django.http import Http404
-from rest_framework import status
-from rest_framework.response import Response
-from rest_framework.views import APIView
+from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from ..models import Menu
+from ..permissions import IsOwnerOrReadOnly
 from ..serializers import MenuSerializer
 
 
-class MenuList(APIView):
-    permission_classes = [IsAuthenticatedOrReadOnly]
+class MenuViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
-    def get(self, request):
-        menus = Menu.objects.all()
-        serializer = MenuSerializer(menus, many=True)
-        return Response(serializer.data)
+    queryset = Menu.objects.all()
+    serializer_class = MenuSerializer
 
-    def post(self, request):
-        serializer = MenuSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-class MenuDetail(APIView):
-    permission_classes = [IsAuthenticatedOrReadOnly]
-
-    def get_object(self, pk):
-        try:
-            return Menu.objects.get(pk=pk)
-        except Menu.DoesNotExist:
-            raise Http404
-
-    def get(self, request, pk):
-        menu = self.get_object(pk)
-        serializer = MenuSerializer(menu)
-        return Response(serializer.data)
-
-    def put(self, request, pk):
-        menu = self.get_object(pk)
-        serializer = MenuSerializer(menu, data=request.data, partial=True)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, pk):
-        menu = self.get_object(pk)
-        menu.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+    def perform_create(self, serializer):
+        serializer.save(vendor=self.request.user)

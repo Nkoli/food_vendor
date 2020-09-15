@@ -47,9 +47,31 @@ class MealSerializer(serializers.ModelSerializer):
 
 
 class MenuSerializer(serializers.ModelSerializer):
+    vendor = serializers.ReadOnlyField(source='vendor.name')
+    frequency_of_occurence = serializers.SerializerMethodField()
+
     class Meta:
         model = Menu
-        fields = '__all__'
+        fields = ['id', 'name', 'meals', 'vendor', 'dietary_type',
+                  'description', 'days_of_occurence', 'frequency_of_occurence']
+
+    def update(self, instance, validated_data):
+        meals = validated_data.get('meals')
+        if meals:
+            instance.meals.add(*meals)
+
+        days_of_occurence = validated_data.get('days_of_occurence')
+        if days_of_occurence:
+            instance.days_of_occurence.add(*days_of_occurence)
+
+        instance.name = validated_data.get('name', instance.name)
+        instance.dietary_type = validated_data.get('dietary_type', instance.dietary_type)
+        instance.description = validated_data.get('description', instance.description)
+        instance.save()
+        return instance
+
+    def get_frequency_of_occurence(self, obj):
+        return obj.days_of_occurence.count()
 
 
 class OrderSerializer(serializers.ModelSerializer):
