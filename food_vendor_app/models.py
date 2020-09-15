@@ -37,6 +37,24 @@ class Meal(models.Model):
         return f'{self.name} made by {self.vendor.name}'
 
 
+class Days_Of_Occurence(models.Model):
+    DAYS = [
+        ('MONDAY', 'Monday'),
+        ('TUESDAY', 'Tuesday'),
+        ('WEDNESDAY', 'Wednesday'),
+        ('THURSDAY', 'Thursday'),
+        ('FRIDAY', 'Friday'),
+        ('SATURDAY', 'Saturday'),
+        ('SUNDAY', 'Sunday')
+    ]
+
+    days_of_occurence = models.CharField(
+        max_length=15, choices=DAYS, unique=True)
+
+    def __str__(self):
+        return self.days_of_occurence
+
+
 class Menu(models.Model):
     DIETARY_TYPE = [
         ('VEGAN', 'Vegan'),
@@ -47,11 +65,11 @@ class Menu(models.Model):
     ]
 
     name = models.CharField(max_length=200)
-    meals = models.ForeignKey(Meal, on_delete=models.CASCADE)
-    vendor_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    meals = models.ManyToManyField(Meal, related_name='meals')
+    vendor = models.ForeignKey(User, on_delete=models.CASCADE)
     dietary_type = models.CharField(max_length=20, choices=DIETARY_TYPE)
     description = models.TextField(null=True)
-    days_of_occurence = ArrayField(models.CharField(max_length=15))
+    days_of_occurence = models.ManyToManyField(Days_Of_Occurence, related_name='days')
     frequency_of_occurence = models.PositiveSmallIntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
 
