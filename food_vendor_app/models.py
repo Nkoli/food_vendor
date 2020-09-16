@@ -88,11 +88,11 @@ class Order(models.Model):
     vendor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='vendor_user')
     status = models.CharField(max_length=25, choices=ORDER_STATUS)
     menu = models.ForeignKey(Menu, on_delete=models.CASCADE, null=True, blank=True)
-    meal = models.ForeignKey(Meal, on_delete=models.CASCADE, null=True, blank=True)
+    meal = models.ManyToManyField(Meal, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
 
 class OrderPayment(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='order_payment')
     amount_due = models.DecimalField(max_digits=8, decimal_places=2)
     amount_paid = models.DecimalField(max_digits=8, decimal_places=2)
