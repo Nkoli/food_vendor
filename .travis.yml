@@ -7,9 +7,9 @@ services:
 - postgresql
 before_script:
 - psql -c 'create database travis_ci_test;' -U postgres
-- python manage.py migrate --settings=food_vendor_project.settings.test
+- python manage.py migrate --settings=food_vendor.settings.test
 script:
-- coverage run --source=food_vendor_app manage.py test --settings=food_vendor_project.settings.test
+- coverage run --source=api manage.py test --settings=food_vendor.settings.test
 - flake8 .
 after_success: coveralls
 notifications:
