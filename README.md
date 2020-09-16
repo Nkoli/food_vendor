@@ -17,7 +17,7 @@ Food Vendor is written in Python3 and Django 3.0.9
 
 - Install Python3 on your machine. If it's already preinstalled, upgrade to [Python3](https://www.python.org/download/releases/3.0/).
 
-- Clone the repository `$ git clone https://github.com/Nkoli/food_vendor_app.git`
+- Clone the repository `$ git clone https://github.com/Nkoli/food_vendor.git`
 
 - Install the required dependencies with `$ pip install -r requirements.txt`
 
