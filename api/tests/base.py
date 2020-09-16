@@ -13,12 +13,21 @@ class BaseTestCase(APITestCase):
             password='testpassword'
         )
 
-        self.test_user = User.objects.create(
+        self.test_user = User.objects.create_user(
             email='testuser@testuser.com',
             password='*test@user2password',
             phone_number=1234567,
             name='test user'
         )
+
+        self.test_user_login = self.client.post('/auth/login/', {
+            'email': 'testuser@testuser.com',
+            'password': '*test@user2password'
+        }, format='json')
+
+        self.assertEqual(self.test_user_login.status_code, 200)
+
+        self.token = self.test_user_login.data['token']['access']
 
         self.days_of_occurence = Days_Of_Occurence.objects.create(
             days_of_occurence='test day'
