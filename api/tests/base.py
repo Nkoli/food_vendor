@@ -13,21 +13,39 @@ class BaseTestCase(APITestCase):
             password='testpassword'
         )
 
-        self.test_user = User.objects.create_user(
+        self.test_vendor = User.objects.create_user(
+            email='vendor@vendor.com',
+            password='@vendor*password1',
+            phone_number=1234567890,
+            name='vendor',
+            is_vendor=True,
+            business_name='vendor kitchen'
+        )
+
+        self.test_vendor_login = self.client.post('/auth/login/', {
+            'email': 'vendor@vendor.com',
+            'password': '@vendor*password1'
+        }, format='json')
+
+        self.assertEqual(self.test_vendor_login.status_code, 200)
+
+        self.vendor_token = self.test_vendor_login.data['token']['access']
+
+        self.test_customer = User.objects.create_user(
             email='testuser@testuser.com',
             password='*test@user2password',
             phone_number=1234567,
             name='test user'
         )
 
-        self.test_user_login = self.client.post('/auth/login/', {
+        self.test_customer_login = self.client.post('/auth/login/', {
             'email': 'testuser@testuser.com',
             'password': '*test@user2password'
         }, format='json')
 
-        self.assertEqual(self.test_user_login.status_code, 200)
+        self.assertEqual(self.test_customer_login.status_code, 200)
 
-        self.token = self.test_user_login.data['token']['access']
+        self.customer_token = self.test_customer_login.data['token']['access']
 
         self.days_of_occurence = Days_Of_Occurence.objects.create(
             days_of_occurence='test day'
@@ -35,14 +53,14 @@ class BaseTestCase(APITestCase):
 
         self.meal = Meal.objects.create(
             name='test meal',
-            vendor=self.admin_user,
+            vendor=self.test_vendor,
             description='test meal description',
             metadata='test meal metadata'
         )
 
         self.menu = Menu.objects.create(
             name='test menu',
-            vendor=self.admin_user,
+            vendor=self.test_vendor,
             dietary_type='test dietary type',
             description='test menu description',
             frequency_of_occurence=1
@@ -52,8 +70,8 @@ class BaseTestCase(APITestCase):
         self.menu.save()
 
         self.order = Order.objects.create(
-            customer=self.test_user,
-            vendor=self.admin_user,
+            customer=self.test_customer,
+            vendor=self.test_vendor,
             status='test status',
         )
         self.order.meal.add(self.meal)

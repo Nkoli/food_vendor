@@ -5,8 +5,8 @@ from .base import BaseTestCase
 class TestCreateModels(BaseTestCase):
 
     def test_user_is_created(self):
-        self.assertEqual(User.objects.count(), 2)
-        self.assertEqual(self.test_user.phone_number, 1234567)
+        self.assertEqual(User.objects.count(), 3)
+        self.assertEqual(self.test_customer.phone_number, 1234567)
 
     def test_days_of_occurence_is_created(self):
         self.assertEqual(Days_Of_Occurence.objects.count(), 1)
