@@ -90,3 +90,4 @@ class BaseTestCase(APITestCase):
         Meal.objects.all().delete()
         Days_Of_Occurence.objects.all().delete()
         User.objects.all().delete()
+# random
