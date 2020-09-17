@@ -84,9 +84,9 @@ class BaseTestCase(APITestCase):
         )
 
     def tearDown(self):
-        OrderPayment.objects.all().delete()
-        Order.objects.all().delete()
-        Menu.objects.all().delete()
-        Meal.objects.all().delete()
         Days_Of_Occurence.objects.all().delete()
         User.objects.all().delete()
+        Meal.objects.all().delete()
+        Menu.objects.all().delete()
+        Order.objects.all().delete()
+        OrderPayment.objects.all().delete()
