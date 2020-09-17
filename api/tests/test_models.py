@@ -9,7 +9,7 @@ class TestCreateModels(BaseTestCase):
         self.assertEqual(self.test_customer.phone_number, 1234567)
 
     def test_days_of_occurence_is_created(self):
-        self.assertEqual(Days_Of_Occurence.objects.count(), 1)
+        self.assertEqual(Days_Of_Occurence.objects.count(), 2)
         self.assertEqual(self.days_of_occurence.days_of_occurence, 'test day')
 
     def test_meal_is_created(self):

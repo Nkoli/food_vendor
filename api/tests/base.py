@@ -51,6 +51,10 @@ class BaseTestCase(APITestCase):
             days_of_occurence='test day'
         )
 
+        self.another_day_of_occurence = Days_Of_Occurence.objects.create(
+            days_of_occurence='TESTDAY'
+        )
+
         self.meal = Meal.objects.create(
             name='test meal',
             vendor=self.test_vendor,
