@@ -70,8 +70,8 @@ class MenuSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
-    def get_frequency_of_occurence(self, obj):
-        return obj.days_of_occurence.count()
+    def get_frequency_of_occurence(self, instance):
+        return instance.days_of_occurence.count()
 
 
 class OrderPaymentSerializer(serializers.ModelSerializer):
@@ -112,7 +112,7 @@ class OrderSerializer(serializers.ModelSerializer):
         instance.save()
 
         for payment_detail in payment_details:
-            payment = payments.pop()
+            payment = payments.pop(0)
             payment.amount_due = payment_detail.get('amount_due', payment.amount_due)
             payment.amount_paid = payment_detail.get('amount_paid', payment.amount_paid)
             payment.save()
