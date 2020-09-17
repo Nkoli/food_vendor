@@ -69,7 +69,7 @@ class Menu(models.Model):
     dietary_type = models.CharField(max_length=20, choices=DIETARY_TYPE)
     description = models.TextField(null=True)
     days_of_occurence = models.ManyToManyField(Days_Of_Occurence, related_name='days')
-    frequency_of_occurence = models.PositiveSmallIntegerField()
+    frequency_of_occurence = models.IntegerField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
