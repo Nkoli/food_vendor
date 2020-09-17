@@ -14,7 +14,7 @@ class TestUserObject(BaseTestCase):
             'business_name': 'test vendor kitchen'
         })
         self.assertEqual(response.status_code, 201)
-        self.assertEqual(User.objects.count(), 3)
+        self.assertEqual(User.objects.count(), 4)
         self.assertIn('token', response.data)
 
     def test_successful_customer_signup(self):
@@ -25,12 +25,12 @@ class TestUserObject(BaseTestCase):
             'password': '@test1customer*'
         })
         self.assertEqual(response.status_code, 201)
-        self.assertEqual(User.objects.count(), 3)
+        self.assertEqual(User.objects.count(), 4)
         self.assertIn('token', response.data)
 
     def test_email_already_exists(self):
         response = self.client.post('/auth/register/', {
-            'name': 'test customer',
+            'name': 'test admin',
             'email': 'testadmin@testadmin.com',
             'phone_number': 1234567,
             'password': '@test1customer*'
@@ -47,7 +47,7 @@ class TestUserObject(BaseTestCase):
             'is_vendor': True
         })
         self.assertEqual(response.status_code, 400)
-        self.assertEqual(User.objects.count(), 2)
+        self.assertEqual(User.objects.count(), 3)
         self.assertIn('Business name is required', response.data['non_field_errors'])
 
     def test_successful_login(self):
@@ -67,6 +67,6 @@ class TestUserObject(BaseTestCase):
         self.assertIn('Invalid email or password.', response.data)
 
     def test_successful_logout(self):
-        self.client.credentials(HTTP_AUTHORIZATION='Bearer ' + self.token)
+        self.client.credentials(HTTP_AUTHORIZATION='Bearer ' + self.customer_token)
         response = self.client.post('/auth/logout/')
         self.assertEqual(response.status_code, 200)
