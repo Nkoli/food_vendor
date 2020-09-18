@@ -57,6 +57,7 @@ class BaseTestCase(APITestCase):
 
         self.meal = Meal.objects.create(
             name='test meal',
+            price=10,
             vendor=self.test_vendor,
             description='test meal description',
             metadata='test meal metadata'
@@ -65,6 +66,7 @@ class BaseTestCase(APITestCase):
         self.menu = Menu.objects.create(
             name='test menu',
             vendor=self.test_vendor,
+            price=10,
             dietary_type='test dietary type',
             description='test menu description',
             frequency_of_occurence=1

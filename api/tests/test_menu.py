@@ -31,6 +31,7 @@ class TestMenuView(BaseTestCase):
         response = self.client.post('/menus/', {
             'name': 'test menu two',
             'meals': [self.meal.pk],
+            'price': 50,
             'vendor': self.test_vendor.name,
             'dietary_type': 'VEGAN',
             'description': 'random test menu description',
