@@ -27,6 +27,7 @@ class User(AbstractUser):
 
 class Meal(models.Model):
     name = models.CharField(max_length=300)
+    price = models.DecimalField(max_digits=8, decimal_places=2)
     vendor = models.ForeignKey(User, on_delete=models.CASCADE)
     description = models.TextField()
     metadata = models.CharField(max_length=250)
@@ -65,6 +66,7 @@ class Menu(models.Model):
 
     name = models.CharField(max_length=200)
     meals = models.ManyToManyField(Meal, related_name='meals')
+    price = models.DecimalField(max_digits=8, decimal_places=2)
     vendor = models.ForeignKey(User, on_delete=models.CASCADE)
     dietary_type = models.CharField(max_length=20, choices=DIETARY_TYPE)
     description = models.TextField(null=True)
