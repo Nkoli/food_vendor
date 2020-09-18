@@ -30,6 +30,7 @@ class TestMealView(BaseTestCase):
         self.client.credentials(HTTP_AUTHORIZATION='Bearer ' + self.vendor_token)
         response = self.client.post('/meals/', {
             'name': 'test meal two',
+            'price': 50,
             'vendor': self.test_vendor,
             'description': 'random test meal',
             'metadata': 'randommeal, testmeal'

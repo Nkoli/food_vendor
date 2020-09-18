@@ -36,7 +36,7 @@ class MealSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Meal
-        fields = ['id', 'name', 'vendor', 'description', 'metadata']
+        fields = ['id', 'name', 'price', 'vendor', 'description', 'metadata']
 
     def update(self, instance, validated_data):
         instance.name = validated_data.get('name', instance.name)
@@ -52,7 +52,7 @@ class MenuSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Menu
-        fields = ['id', 'name', 'meals', 'vendor', 'dietary_type',
+        fields = ['id', 'name', 'meals', 'price', 'vendor', 'dietary_type',
                   'description', 'days_of_occurence', 'frequency_of_occurence']
 
     def update(self, instance, validated_data):
