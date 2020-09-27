@@ -74,47 +74,25 @@ class MenuSerializer(serializers.ModelSerializer):
         return instance.days_of_occurence.count()
 
 
-class OrderPaymentSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = OrderPayment
-        fields = ['id', 'amount_due', 'amount_paid']
-
-
 class OrderSerializer(serializers.ModelSerializer):
-    order_payment = OrderPaymentSerializer(many=True)
     customer = serializers.ReadOnlyField(source='customer.name')
 
     class Meta:
         model = Order
-        fields = ['id', 'customer', 'vendor', 'menu', 'meal', 'order_payment', 'status']
-
-    def create(self, validated_data):
-        meal = validated_data.pop('meal')
-        payment_details = validated_data.pop('order_payment')
-        order = Order.objects.create(**validated_data)
-        for ml in meal:
-            order.meal.add(ml)
-        for payment_detail in payment_details:
-            OrderPayment.objects.create(order=order, **payment_detail)
-        return order
+        fields = ['id', 'customer', 'vendor', 'meal', 'status']
 
     def update(self, instance, validated_data):
-        payment_details = validated_data.pop('order_payment')
-        payments = (instance.order_payment).all()
-        payments = list(payments)
         meal = validated_data.get('meal')
         if meal:
             instance.meal.add(*meal)
         instance.vendor = validated_data.get('vendor', instance.vendor)
         instance.status = validated_data.get('status', instance.status)
-        instance.menu = validated_data.get('menu', instance.menu)
         instance.save()
-
-        for payment_detail in payment_details:
-            payment = payments.pop(0)
-            payment.amount_due = payment_detail.get('amount_due', payment.amount_due)
-            payment.amount_paid = payment_detail.get('amount_paid', payment.amount_paid)
-            payment.save()
-
         return instance
+
+
+class OrderPaymentSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = OrderPayment
+        fields = ['id', 'amount_due', 'amount_paid']
