@@ -25,7 +25,6 @@ class TestCreateModels(BaseTestCase):
     def test_order_is_created(self):
         self.assertEqual(Order.objects.count(), 1)
         self.assertTrue(hasattr(self.order, 'meal'))
-        self.assertTrue(hasattr(self.order, 'menu'))
 
     def test_order_payment_is_created(self):
         self.assertEqual(OrderPayment.objects.count(), 1)
