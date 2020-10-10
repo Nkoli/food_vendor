@@ -95,4 +95,4 @@ class OrderPaymentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = OrderPayment
-        fields = ['id', 'amount_due', 'amount_paid']
+        fields = ['id', 'order', 'amount_due', 'amount_paid']
