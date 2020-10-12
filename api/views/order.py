@@ -4,8 +4,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from ..models import Order, OrderPayment
-from ..serializers import OrderPaymentSerializer, OrderSerializer
+from ..models import Order
+from ..serializers import OrderSerializer
 
 
 class OrderList(APIView):
