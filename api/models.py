@@ -20,6 +20,8 @@ class User(AbstractUser):
     name = models.CharField(max_length=200, blank=False, null=False)
     is_vendor = models.BooleanField(default=False)
     business_name = models.CharField(max_length=100, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f'{self.email} - {self.name}'
@@ -32,6 +34,7 @@ class Meal(models.Model):
     description = models.TextField()
     metadata = models.CharField(max_length=250)
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f'{self.name} made by {self.vendor.name}'
@@ -66,13 +69,13 @@ class Menu(models.Model):
 
     name = models.CharField(max_length=200)
     meals = models.ManyToManyField(Meal, related_name='meals')
-    price = models.DecimalField(max_digits=8, decimal_places=2)
     vendor = models.ForeignKey(User, on_delete=models.CASCADE)
     dietary_type = models.CharField(max_length=20, choices=DIETARY_TYPE)
     description = models.TextField(null=True)
     days_of_occurence = models.ManyToManyField(Days_Of_Occurence, related_name='days')
     frequency_of_occurence = models.IntegerField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f'{self.name}, a {self.dietary_type} menu.'
@@ -88,12 +91,14 @@ class Order(models.Model):
     customer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='customer_user')
     vendor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='vendor_user')
     status = models.CharField(max_length=25, choices=ORDER_STATUS)
-    meal = models.ManyToManyField(Meal, blank=True)
+    meal = models.ManyToManyField(Meal)
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 
 class OrderPayment(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='order_payment')
+    order_id = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='order_payment')
     amount_due = models.DecimalField(max_digits=8, decimal_places=2)
     amount_paid = models.DecimalField(max_digits=8, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
