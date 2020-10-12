@@ -52,7 +52,7 @@ class MenuSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Menu
-        fields = ['id', 'name', 'meals', 'price', 'vendor', 'dietary_type',
+        fields = ['id', 'name', 'meals', 'vendor', 'dietary_type',
                   'description', 'days_of_occurence', 'frequency_of_occurence']
 
     def update(self, instance, validated_data):
@@ -95,4 +95,4 @@ class OrderPaymentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = OrderPayment
-        fields = ['id', 'order', 'amount_due', 'amount_paid']
+        fields = ['id', 'order_id', 'amount_due', 'amount_paid']
