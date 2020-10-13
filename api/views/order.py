@@ -4,8 +4,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from ..models import Order
-from ..serializers import OrderSerializer
+from ..models import Order, OrderPayment
+from ..serializers import OrderSerializer, OrderPaymentSerializer
 
 
 class OrderList(APIView):
@@ -49,4 +49,48 @@ class OrderDetail(APIView):
     def delete(self, request, pk):
         order = self.get_object(pk)
         order.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class PaymentList(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        payments = OrderPayment.objects.all()
+        serializer = OrderPaymentSerializer(payments, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = OrderPaymentSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class PaymentDetail(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self, pk):
+        try:
+            return OrderPayment.objects.get(pk=pk)
+        except OrderPayment.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk):
+        payment = self.get_object(pk)
+        serializer = OrderPaymentSerializer(payment)
+        return Response(serializer.data)
+
+    def put(self, request, pk):
+        payment = self.get_object(pk)
+        serializer = OrderPaymentSerializer(payment, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk):
+        payment = self.get_object(pk)
+        payment.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
