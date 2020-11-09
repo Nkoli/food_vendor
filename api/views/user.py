@@ -1,9 +1,9 @@
 import datetime
 
-from django.contrib.auth import logout
+# from django.contrib.auth import logout
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 
@@ -61,14 +61,14 @@ class UserLoginViewSet(viewsets.GenericViewSet):
         )
 
 
-class UserLogoutViewSet(viewsets.GenericViewSet):
-    permission_classes = [IsAuthenticated]
+# class UserLogoutViewSet(viewsets.GenericViewSet):
+#     permission_classes = [IsAuthenticated]
 
-    @action(methods=['POST', ], detail=False)
-    def logout(self, request):
-        logout(request)
-        return Response(
-            {
-                "message": "Successfully logged out"
-            }, status=status.HTTP_200_OK
-        )
+#     @action(methods=['POST', ], detail=False)
+#     def logout(self, request):
+#         logout(request)
+#         return Response(
+#             {
+#                 "message": "Successfully logged out"
+#             }, status=status.HTTP_200_OK
+#         )
