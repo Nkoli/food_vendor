@@ -32,6 +32,7 @@ pyflakes==2.2.0
 PyJWT==1.7.1
 python-dotenv==0.14.0
 pytz==2020.1
+PyYAML==5.3.1
 requests==2.24.0
 simplejson==3.17.2
 six==1.15.0
