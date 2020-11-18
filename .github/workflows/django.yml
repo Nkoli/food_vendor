@@ -1,4 +1,4 @@
-name: Django CI
+name: Food Vendor App CI
 
 on: [push, pull_request]
 
@@ -21,8 +21,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       - name: Set environment variables
-        env:
-          SECRET_KEY: DVr_FOPw+TnP4:i#RsBpBlkceXGcb5pJmU40-d>,]fpA9~aT=*
+        run: env
       - name: Run Tests
         run: |
           python manage.py test
