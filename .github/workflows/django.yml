@@ -21,9 +21,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       - name: Use masked secret tokens
-        run:
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
-          DEBUG: ${{ secrets.DEBUG }}
+        with:
+          credentials: ${{ secrets.SECRET_KEY }}
       - name: Run Tests
         run: |
           python manage.py test
