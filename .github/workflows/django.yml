@@ -23,7 +23,9 @@ jobs:
       - name: Lint with flake8
         run: |
           flake8 .
-      - name: Run tests
-        with:
+      - name: Add secret key env variable
+        env:
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
-        run: python manage.py test
+      - name: Run Tests
+        run: |
+          python manage.py test
