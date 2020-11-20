@@ -20,13 +20,11 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-      - name: Use masked secret tokens
-        uses:
-          env:
-            SECRET_KEY: ${{ secrets.SECRET_KEY }}
       - name: Lint with flake8
         run: |
           flake8 .
-      - name: Run Tests
+      - name: Run tests
+          with:
+            SECRET_KEY: ${{ secrets.SECRET_KEY }}
         run: |
           python manage.py test
