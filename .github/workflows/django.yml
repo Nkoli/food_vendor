@@ -24,7 +24,6 @@ jobs:
         run: |
           flake8 .
       - name: Run tests
-          with:
-            SECRET_KEY: ${{ secrets.SECRET_KEY }}
-        run: |
-          python manage.py test
+        with:
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+        run: python manage.py test
