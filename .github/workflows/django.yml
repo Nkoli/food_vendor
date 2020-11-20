@@ -37,7 +37,7 @@ jobs:
           postgresql version: "11"
         env:
           POSTGRES_HOST: localhost
-          POSTGRES_PORT: ${{ jobs.services.postgres.ports[5432] }}
+          POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }}
       - name: Lint with flake8
         run: flake8 .
       - name: Add secret key env variable and run migrations
