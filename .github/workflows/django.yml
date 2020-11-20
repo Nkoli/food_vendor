@@ -1,4 +1,4 @@
-name: Django CI
+name: Food Vendor CI
 
 on: [push, pull_request]
 
@@ -20,9 +20,12 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-      - name: Use masked secret tokens
-        with:
-          credentials: ${{ secrets.SECRET_KEY }}
+      # - name: Use masked secret tokens
+      #   env:
+      #     SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      - name: Lint with flake8
+        run: |
+          flake8 .
       - name: Run Tests
         run: |
           python manage.py test
