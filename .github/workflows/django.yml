@@ -51,7 +51,7 @@ jobs:
         run: |
           python manage.py test
       - name: Food Vendor coverage action
-        uses: actions/python-django-coverage-github-action
+        uses: actions/python-django-coverage-gitHub-action@0.9
         with:
           django-app: "food_vendor"
           minimum-coverage: "10"
