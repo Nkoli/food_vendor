@@ -7,9 +7,9 @@ load_dotenv()
 
 
 # Ensure development settings are not used in testing and production:
-if os.getenv('ENVIRONMENT') == 'PRODUCTION':
+if os.getenv('PRODUCTION'):
     from .production import *
-elif os.getenv('ENVIRONMENT') == 'GITHUB_WORKFLOW':
+elif os.getenv('GITHUB_WORKFLOW'):
     from .test import *
 else:
     from .local import *

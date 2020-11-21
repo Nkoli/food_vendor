@@ -36,7 +36,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-      - name: Connect to postgreSQL, add env variables and migrate data
+      - name: Add env vars, connect to PostgreSQL and migrate data
         env:
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
           POSTGRES_HOST: localhost
