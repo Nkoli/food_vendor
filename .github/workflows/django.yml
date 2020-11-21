@@ -50,10 +50,11 @@ jobs:
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
         run: |
           python manage.py test
-      - name: Coverage Report
-        uses: coverallsapp/github-action@master
+      - name: Food Vendor coverage action
+        uses: actions/python-django-coverage-github-action
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          django-app: "food_vendor"
+          minimum-coverage: "10"
       - name: Slack Notification
         uses: rtCamp/action-slack-notify@v2
         env:
