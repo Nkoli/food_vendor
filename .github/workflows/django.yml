@@ -50,6 +50,10 @@ jobs:
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
         run: |
           python manage.py test
+      - name: Coverage Report
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Slack Notification
         uses: rtCamp/action-slack-notify@v2
         env:
