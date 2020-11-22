@@ -62,6 +62,14 @@ jobs:
           coveralls
 
       - name: Slack Notification
-        uses: rtCamp/action-slack-notify@v2
+        uses: bryannice/gitactions-slack-notification@master
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_TITLE: "Build Status"
+          SLACK_MESSAGE: "Build message"
+      # - name: Deploy to Heroku
+      #   uses: akhileshns/heroku-deploy@v3.6.8
+      #   with:
+      #     heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+      #     heroku_app_name: "food-vend-app-staging"
+      #     heroku_email: "nkoliokafor@gmail.com"
