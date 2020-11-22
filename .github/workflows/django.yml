@@ -65,17 +65,3 @@ jobs:
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-      - name: Deploy to Heroku staging app
-        uses: akhileshns/heroku-deploy@v3.6.8
-        with:
-          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: "food-vend-app-staging"
-          heroku_email: "nkoliokafor@gmail.com"
-          branch: "staging"
-      - name: Deploy to Heroku master app
-        uses: akhileshns/heroku-deploy@v3.6.8
-        with:
-          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: "food-vend-app"
-          heroku_email: "nkoliokafor@gmail.com"
-          branch: "master"
