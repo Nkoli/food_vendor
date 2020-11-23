@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.org/Nkoli/food_vendor.svg?branch=staging)](https://travis-ci.org/Nkoli/food_vendor_app)
-[![Coverage Status](https://coveralls.io/repos/github/Nkoli/food_vendor_app/badge.svg?branch=staging)](https://coveralls.io/github/Nkoli/food_vendor_app?branch=staging)
+![Food Vendor CI](https://github.com/Nkoli/food_vendor/workflows/Food%20Vendor%20CI/badge.svg)
+[![Coverage Status](https://coveralls.io/repos/github/Nkoli/food_vendor/badge.svg?branch=staging)](https://coveralls.io/github/Nkoli/food_vendor?branch=staging)
 
 # FOOD_VENDOR
 
