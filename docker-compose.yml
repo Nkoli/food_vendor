@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+  db:
+    container_name: postgresdb
+    image: postgres:latest
+    restart: always
+    ports:
+      - 5432
+    environment:
+      - POSTGRES_USER=userone
+      - POSTGRES_PASSWORD=secretpassword
+      - POSTGRES_DB=foodvendor_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  web:
+    container_name: food_vendor_project
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    env_file:
+      - .env
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:
