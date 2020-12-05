@@ -5,12 +5,8 @@ services:
     container_name: postgresdb
     image: postgres:latest
     restart: always
-    ports:
-      - 5432
-    environment:
-      - POSTGRES_USER=userone
-      - POSTGRES_PASSWORD=secretpassword
-      - POSTGRES_DB=foodvendor_db
+    env_file:
+      - .env
     volumes:
       - postgres_data:/var/lib/postgresql/data
 

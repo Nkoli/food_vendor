@@ -27,7 +27,7 @@ Food Vendor is written in Python3 and Django 3.0.9
 
 - Run `$ docker-compose up -d --build` to build the container the first time. Run `$ docker-compose up` for subsequent start-ups. To stop the server, run `$ docker-compose down`.
 
-- To create a super user within the docker container, run `$ docker-compose exec web python manage.py createsuperuser`.
+- To create a superuser within the docker container, run `$ docker-compose exec web python manage.py createsuperuser`.
 
 ## Local Development Environment Usage
 
