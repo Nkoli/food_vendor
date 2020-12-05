@@ -23,7 +23,13 @@ Food Vendor is written in Python3 and Django 3.0.9
 
 - Create a `.env file` in your root directory using the .env.example file as a guide.
 
-## Usage
+## Using Docker
+
+- Run `$ docker-compose up -d --build` to build the container the first time. Run `$ docker-compose up` for subsequent start-ups. To stop the server, run `$ docker-compose down`.
+
+- To create a super user within the docker container, run `$ docker-compose exec web python manage.py createsuperuser`.
+
+## Local Development Environment Usage
 
 - Start the application `$ python manage.py runserver`
 
